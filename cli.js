@@ -4,7 +4,7 @@ const path = require('path');
 const yargs = require('yargs');
 const { hideBin } = require('yargs/helpers');
 const cliProgress = require('cli-progress');
-const { wpExtract, wpCompress } = require('./lib/wpress-handler');
+const { wpExtract, wpCompress } = require('./lib/wpress');
 
 /**
  * Executes a task (either compression or extraction) with progress indication.
