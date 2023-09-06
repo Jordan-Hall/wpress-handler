@@ -10,16 +10,16 @@ const { wpExtract, wpCompress } = require('./lib/wpress');
  * Executes a task (either compression or extraction) with progress indication.
  * 
  * @param {Function} task - The task function to be executed (either wpExtract or wpCompress).
- * @param {string} inputPath - The input path (either a directory or a .wpress file).
- * @param {string} outputPath - The output path (either a directory or a .wpress file).
+ * @param {string} input - The input path (either a directory or a .wpress file).
+ * @param {string} output - The output path (either a directory or a .wpress file).
  */
-function executeWithProgress(task, inputPath, outputPath) {
+function executeWithProgress(task, input, output) {
     const progressBar = new cliProgress.SingleBar({
         format: 'Progress: {bar} | {percentage}%',
     }, cliProgress.Presets.shades_classic);
 
     const onStart = (totalSize) => {
-        console.log(`Processing content from: ${path.relative(process.cwd(), inputPath)}/`);
+        console.log(`Processing content from: ${path.relative(process.cwd(), input)}/`);
         progressBar.start(totalSize, 0);
     };
 
@@ -29,10 +29,10 @@ function executeWithProgress(task, inputPath, outputPath) {
 
     const onFinish = () => {
         progressBar.stop();
-        console.log(`Task completed. Output: ${outputPath}`);
+        console.log(`Task completed. Output: ${output}`);
     };
 
-    return task({ inputPath, outputPath, onStart, onUpdate, onFinish })
+    return task({ input, output, onStart, onUpdate, onFinish })
         .catch(error => {
             progressBar.stop();
             console.error('Error:', error.message);
